@@ -50,7 +50,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         BSLS,Q,   W,   E,   R,   T,   FN2,
         TAB, A,   S,   D,   F,   G,
         LSFT,Z,   X,   C,   V,   B,   FN1,
-        LCTL,LALT, CAPS,FN1,LGUI,
+        LGUI,FN1, CAPS,LALT,LCTL,
                                       HOME,END,
                                            FN2,
                                  BSPC,ESC, DEL,
@@ -129,7 +129,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 KEYMAP(  // layer 4 : keyboard functions
         // left hand
-        FN0, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+        FN1, TRNS,TRNS,TRNS,TRNS,TRNS,FN2,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
@@ -174,8 +174,8 @@ static const uint16_t PROGMEM fn_actions[] = {
 
 static const uint16_t PROGMEM fn_actions_4[] = {
     [0]  =  ACTION_MACRO(PASSWORD1),                        // FN1  = default password
-    [1]  =  ACTION_MACRO(PASSWORD1),                        // FN2  = other password
-    [2]  =  ACTION_MACRO(PASSWORD1),                        // FN3  = mega password
+    [1]  =  ACTION_MACRO(PASSWORD2),                        // FN2  = other password
+    [2]  =  ACTION_MACRO(PASSWORD3),                        // FN3  = mega password
 };
 
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
@@ -195,6 +195,8 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
     if (record->event.pressed) {
         switch (id) {
             case PASSWORD1:     return MACRO_PASSWORD1;
+            case PASSWORD2:     return MACRO_PASSWORD2;
+            case PASSWORD3:     return MACRO_PASSWORD3;
         }
     }
     return MACRO_NONE;
