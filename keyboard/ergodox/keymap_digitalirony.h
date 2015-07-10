@@ -49,7 +49,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         GRV, 1,   2,   3,   4,   5,   ESC,
         BSLS,Q,   W,   E,   R,   T,   FN2,
         TAB, A,   S,   D,   F,   G,
-        LSFT,Z,   X,   C,   V,   B,   FN1,
+        LSFT,Z,   X,   C,   V,   B,   LGUI,
         LGUI,FN1, CAPS,LALT,LCTL,
                                       HOME,END,
                                            FN2,
@@ -98,13 +98,13 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  TRNS,TRNS,TRNS,
         // right hand
              FN0, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
-             FN4,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
+             TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                   TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
              TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
                        TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,
         TRNS,
-        TRNS,TRNS,TRNS
+        TRNS,TRNS,FN4
     ),
 
     KEYMAP(  // layer 3: numpad
@@ -121,7 +121,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              TRNS,NLCK,PSLS,PAST,PAST,PMNS,BSPC,
              TRNS,NO,  P7,  P8,  P9,  PMNS,BSPC,
                   NO,  P4,  P5,  P6,  PPLS,PENT,
-             TRNS,NO,  P1,  P2,  P3,  PPLS,PENT,
+             TRNS,NO,  P1,  P2,  P3,  PPLS,FN4,
                        P0,  PDOT,SLSH,PENT,PENT,
         TRNS,TRNS,
         TRNS,
@@ -129,7 +129,7 @@ static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 KEYMAP(  // layer 4 : keyboard functions
         // left hand
-        FN1, TRNS,TRNS,TRNS,TRNS,TRNS,FN2,
+        FN0, FN1,FN2,FN3,FN4,FN5,FN6,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
         TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,
@@ -159,6 +159,9 @@ enum macro_id {
     PASSWORD1,
     PASSWORD2,
     PASSWORD3,
+    PASSWORD4,
+    PASSWORD5,
+    PASSWORD6,
 };
 /*
  * Fn action definition
@@ -167,15 +170,18 @@ static const uint16_t PROGMEM fn_actions[] = {
     ACTION_FUNCTION(TEENSY_KEY),                    // FN0 - Teensy key
     ACTION_LAYER_MOMENTARY(1),                      // FN1 - switch to Layer1
     ACTION_LAYER_TOGGLE(2),                  // FN2 - set Layer2
-    ACTION_LAYER_TOGGLE(3),                         // FN3 - toggle Layer3 aka Numpad layer
+    ACTION_LAYER_MOMENTARY(3),                         // FN3 - toggle Layer3 aka Numpad layer
     ACTION_LAYER_MOMENTARY(4),                      // FN4 - set Layer0
     ACTION_LAYER_SET(0, ON_PRESS),                  // FN5 - set Layer0
 };
 
 static const uint16_t PROGMEM fn_actions_4[] = {
-    [0]  =  ACTION_MACRO(PASSWORD1),                        // FN1  = default password
-    [1]  =  ACTION_MACRO(PASSWORD2),                        // FN2  = other password
-    [2]  =  ACTION_MACRO(PASSWORD3),                        // FN3  = mega password
+    [0]  =  ACTION_MACRO(PASSWORD1),                        // FN0  = default password
+    [1]  =  ACTION_MACRO(PASSWORD2),                        // FN1  = other password
+    [2]  =  ACTION_MACRO(PASSWORD3),                        // FN2  = mega password
+    [3]  =  ACTION_MACRO(PASSWORD4),                        // FN3  = mega password
+    [4]  =  ACTION_MACRO(PASSWORD5),                        // FN4  = mega password
+    [5]  =  ACTION_MACRO(PASSWORD6),                        // FN5  = mega password
 };
 
 void action_function(keyrecord_t *event, uint8_t id, uint8_t opt)
@@ -197,6 +203,9 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
             case PASSWORD1:     return MACRO_PASSWORD1;
             case PASSWORD2:     return MACRO_PASSWORD2;
             case PASSWORD3:     return MACRO_PASSWORD3;
+            case PASSWORD4:     return MACRO_PASSWORD4;
+            case PASSWORD5:     return MACRO_PASSWORD5;
+            case PASSWORD6:     return MACRO_PASSWORD6;
         }
     }
     return MACRO_NONE;
